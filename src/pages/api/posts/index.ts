@@ -9,6 +9,8 @@ export const GET: APIRoute = async ({ params, request }) => {
 
     const posts = await getCollection('blog');
 
+    console.log(request);
+
     return new Response(JSON.stringify(posts), { 
         status: 200,
         headers: { 
