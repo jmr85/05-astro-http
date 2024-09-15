@@ -5,6 +5,7 @@ import { Clients, db } from 'astro:db';
 //preciso que sea generada cuando se haga una solicitud
 export const prerender = false;
 
+//http://localhost:4321/api/clients (get all clients)
 export const GET: APIRoute = async ({ params, request }) => {
 
     const clients = await db.select().from(Clients);
@@ -17,6 +18,7 @@ export const GET: APIRoute = async ({ params, request }) => {
     });
 };
 
+//http://localhost:4321/api/clients (create new client)
 export const POST: APIRoute = async ({ params, request }) => {
 
     try{

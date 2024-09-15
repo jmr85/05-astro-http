@@ -5,7 +5,7 @@ import { db, Clients, eq } from 'astro:db';
 //preciso que sea generada cuando se haga una solicitud
 export const prerender = false;
 
-//http://localhost:4321/api/clients/{clientId}
+//http://localhost:4321/api/clients/{clientId} (get valor particular)
 export const GET: APIRoute = async ({ params, request }) => {
 
     const { clientId } = params;
@@ -59,7 +59,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
     }
 };
 
-// http://localhost:4321/api/clients/{clientId}
+// http://localhost:4321/api/clients/{clientId} (delete valor particular)
 export const DELETE: APIRoute = async ({ params, request }) => {
     const clientId = params.clientId ?? '';
 
