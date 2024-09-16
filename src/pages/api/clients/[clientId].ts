@@ -7,21 +7,27 @@ export const prerender = false;
 
 //http://localhost:4321/api/clients/{clientId} (get valor particular)
 export const GET: APIRoute = async ({ params, request }) => {
+  const clientId = params.clientId ?? '';
 
-    const { clientId } = params;
-    console.log( 'clientId ------->>>>>> ', clientId);
+  const client = await db
+      .select()
+      .from(Clients)
+      .where(eq(Clients.id, +clientId));
 
-    const body = {
-        method: 'GET',
-        clientId: clientId,
-    }
-
-    return new Response(JSON.stringify(body), { 
-        status: 200,
-        headers: { 
-            'Content-Type': 'application/json' 
-        } 
-    });
+  if (client.length === 0) {
+      return new Response(JSON.stringify({ msg: `Client with id ${clientId} not found` }), {
+          status: 404,
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+  }
+  return new Response(JSON.stringify(client), { 
+      status: 200,
+      headers: { 
+          'Content-Type': 'application/json' 
+      } 
+  });
 };
 
 //http://localhost:4321/api/clients/{clientId} (update valor particular)
