@@ -13,6 +13,7 @@
 
 <script lang="ts" setup>
     import { ref, defineProps } from 'vue';
+    import confetti from 'canvas-confetti';
 
     interface Props {
         postId: string;
@@ -27,7 +28,16 @@
     const isLoading = ref(true);//se puede hacer con TanStack Query
 
     const likePost = () => {
-        console.log('+1 like post');
+        likeCount.value++;
+        likeClicks.value++;
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: {
+                x: Math.random(), 
+                y: Math.random() - 0.2 
+            },
+        })
     }
 
     const getCurrentLikes = async () => {

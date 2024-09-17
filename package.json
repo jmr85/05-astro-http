@@ -19,7 +19,11 @@
     "@astrojs/vue": "^4.5.0",
     "05-astro-http": "file:",
     "astro": "^4.15.4",
+    "canvas-confetti": "^1.9.3",
     "typescript": "^5.6.2",
     "vue": "^3.5.6"
+  },
+  "devDependencies": {
+    "@types/canvas-confetti": "^1.6.4"
   }
 }
