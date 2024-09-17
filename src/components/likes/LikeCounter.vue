@@ -9,10 +9,11 @@
         Likes
         <span>{{ likeCount }}</span>
     </button>
+    {{ likeClicks }}
 </template>
 
 <script lang="ts" setup>
-    import { ref, defineProps } from 'vue';
+    import { ref, defineProps, watch } from 'vue';
     import confetti from 'canvas-confetti';
 
     interface Props {
@@ -26,6 +27,18 @@
     const likeCount = ref(0);
     const likeClicks = ref(0);//debaunce para no mandar para cada click
     const isLoading = ref(true);//se puede hacer con TanStack Query
+
+    watch( likeCount, () => {
+        fetch(`/api/posts/likes/${ props.postId }`, {
+            method: 'PUT',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ likes: likeClicks.value })
+        });
+
+        likeClicks.value = 0;
+    })
 
     const likePost = () => {
         likeCount.value++;
