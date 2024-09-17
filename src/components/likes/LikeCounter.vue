@@ -9,12 +9,12 @@
         Likes
         <span>{{ likeCount }}</span>
     </button>
-    {{ likeClicks }}
 </template>
 
 <script lang="ts" setup>
     import { ref, defineProps, watch } from 'vue';
     import confetti from 'canvas-confetti';
+    import debounce from 'lodash.debounce'
 
     interface Props {
         postId: string;
@@ -28,7 +28,7 @@
     const likeClicks = ref(0);//debaunce para no mandar para cada click
     const isLoading = ref(true);//se puede hacer con TanStack Query
 
-    watch( likeCount, () => {
+    watch( likeCount, debounce(() =>{
         fetch(`/api/posts/likes/${ props.postId }`, {
             method: 'PUT',
             headers: {
@@ -38,7 +38,7 @@
         });
 
         likeClicks.value = 0;
-    })
+    }, 500));
 
     const likePost = () => {
         likeCount.value++;
