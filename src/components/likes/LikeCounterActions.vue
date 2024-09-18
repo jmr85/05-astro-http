@@ -15,6 +15,7 @@
     import { ref, defineProps, watch } from 'vue';
     import confetti from 'canvas-confetti';
     import debounce from 'lodash.debounce'
+    import { actions } from 'astro:actions';
 
     interface Props {
         postId: string;
@@ -54,14 +55,16 @@
     }
 
     const getCurrentLikes = async () => {
-        const resp = await fetch(`/api/posts/likes/${ props.postId }`);
-        if ( !resp.ok ) return;
 
-        const data = await resp.json();
-
-        // console.log('data', data);
+        const resp = await actions.getPostLikes(props.postId);
         
-        likeCount.value = data.likes;
+        console.log('getCurrentLikes -> resp: ', resp);
+        // const resp = await fetch(`/api/posts/likes/${ props.postId }`);
+        // if ( !resp.ok ) return;
+
+        // const data = await resp.json();
+        
+        // likeCount.value = data.likes;
         isLoading.value = false; 
     }
 
