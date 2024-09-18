@@ -30,13 +30,18 @@
     const isLoading = ref(true);//se puede hacer con TanStack Query
 
     watch( likeCount, debounce(() =>{
-        fetch(`/api/posts/likes/${ props.postId }`, {
-            method: 'PUT',
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ likes: likeClicks.value })
-        });
+        // fetch(`/api/posts/likes/${ props.postId }`, {
+        //     method: 'PUT',
+        //     headers: {
+        //     'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ likes: likeClicks.value })
+        // });
+
+        actions.updatePostsLikes({
+            postId: props.postId,
+            likes: likeClicks.value,
+        })
 
         likeClicks.value = 0;
     }, 500));
