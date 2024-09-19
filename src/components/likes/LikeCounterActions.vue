@@ -61,14 +61,22 @@
 
     const getCurrentLikes = async () => {
 
-        const { likes } = await actions.getPostLikes(props.postId);
-        
-        console.log('getCurrentLikes -> resp: ', likes);
+        const { data, error } = await actions.getPostLikes(props.postId);
+    
         // const resp = await fetch(`/api/posts/likes/${ props.postId }`);
         // if ( !resp.ok ) return;
 
         // const data = await resp.json();
+
+        if (error) {
+            console.error('getCurrentLikes -> error: ', error);
+            return;
+        }
         
+        const { likes } = data;
+
+        console.log('getCurrentLikes -> resp: ', likes);
+
         likeCount.value = likes;
         isLoading.value = false; 
     }
